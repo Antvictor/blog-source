@@ -1,5 +1,5 @@
 from bird import Bird, Penguin
-
+from mypackage import moudle1
 b = Bird("big wings", "green feather");
 b.fly()
 
@@ -11,4 +11,5 @@ b.fly() #重新赋值后才能使用
 p = Penguin("small wings","villus");
 p.fly()
 p.run()
-p.fly("嘎嘎")
+p.cry()
+# p.__cry() 报错

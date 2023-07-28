@@ -13,5 +13,8 @@ class Penguin(Bird) :
   def fly(self):   
     print(f"I`m Penguin, I`m can`t fly, I just glide")
     
-  def fly(self, cry):
-    print(f"I`m Penguin, {cry}, I`m gliding")
+  def __cry(self):
+    print("I only bark at home")
+  def cry(self):
+    print("嘎嘎，这是我在外面的叫声")
+    self.__cry()
