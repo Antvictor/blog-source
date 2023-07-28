@@ -11,7 +11,11 @@ class AlienInvasion:
         self.settings = Settings()
         # 设置一个像素(1200,800)的屏幕
         self.screen = pygame.display.set_mode((self.settings.screen_width, 
-        self.settings.screen_higth))    
+        self.settings.screen_height))    
+        # 全屏
+        # self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+        # self.settings.screen_width =  self.screen.get_rect().width
+        # self.settings.screen_height =  self.screen.get_rect().height
         # 设置标题
         pygame.display.set_caption("Alient Invasion")
         self.ship = Ship(self)
@@ -48,6 +52,10 @@ class AlienInvasion:
             self.ship.move_left = True
         elif event.key == pygame.K_q:
             sys.exit()
+        elif event.key == pygame.K_UP:
+            self.ship.move_top = True
+        elif event.key == pygame.K_DOWN:
+            self.ship.move_down = True
 
     def _check_event_keyup(self, event):
         # 停止移动
@@ -55,6 +63,10 @@ class AlienInvasion:
             self.ship.move_right = False
         elif event.key == pygame.K_LEFT:
             self.ship.move_left = False
+        elif event.key == pygame.K_UP:  
+            self.ship.move_top = False
+        elif event.key == pygame.K_DOWN:
+            self.ship.move_down = False  
 
     def __update_screen(self):
         '''每次循环都重绘屏幕'''
