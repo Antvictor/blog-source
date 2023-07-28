@@ -20,15 +20,41 @@ class AlienInvasion:
         '''开始游戏主循环'''
         while True:
             self._check_event()
+            self.ship.update()
             self.__update_screen()
 
     def _check_event(self):
         '''监听键盘和鼠标操作'''
         for event in pygame.event.get():
+            # 监听到键盘按下
+            if event.type == pygame.KEYDOWN:
+                self._check_event_keydown(event)
+            # 监听到键盘弹起
+            elif event.type == pygame.KEYUP:
+                self._check_event_keyup(event)
+
             # 监听到退出
-            if event.type == pygame.QUIT:
+            if event.type == pygame.QUIT :
                 # 关闭程序
                 sys.exit()
+
+    def _check_event_keydown(self, event):
+        '''按下方向键则可以移动'''
+        # 右键向右移动
+        if event.key == pygame.K_RIGHT:
+            self.ship.move_right = True
+        # 向左移动
+        elif event.key == pygame.K_LEFT:
+            self.ship.move_left = True
+        elif event.key == pygame.K_q:
+            sys.exit()
+
+    def _check_event_keyup(self, event):
+        # 停止移动
+        if event.key == pygame.K_RIGHT:
+            self.ship.move_right = False
+        elif event.key == pygame.K_LEFT:
+            self.ship.move_left = False
 
     def __update_screen(self):
         '''每次循环都重绘屏幕'''
