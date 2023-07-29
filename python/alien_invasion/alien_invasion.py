@@ -30,6 +30,11 @@ class AlienInvasion:
             # 调用编组中每个bullet的update
             self.bullets.update()
             self.__update_screen()
+            # 删除消失的子弹
+            for bullet in self.bullets.copy():
+                if bullet.rect.bottom < 0 :
+                    self.bullets.remove(bullet)
+            print(len(self.bullet))
 
     def _check_event(self):
         '''监听键盘和鼠标操作'''
