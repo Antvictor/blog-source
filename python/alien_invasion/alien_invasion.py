@@ -2,6 +2,7 @@ import sys
 import pygame
 from setting import Settings
 from ship import Ship
+from bullet import Bullet
 
 class AlienInvasion:
     def __init__(self):
@@ -19,12 +20,15 @@ class AlienInvasion:
         # 设置标题
         pygame.display.set_caption("Alient Invasion")
         self.ship = Ship(self)
+        self.bullets = pygame.sprite.Group()
 
     def run_game(self):
         '''开始游戏主循环'''
         while True:
             self._check_event()
             self.ship.update()
+            # 调用编组中每个bullet的update
+            self.bullets.update()
             self.__update_screen()
 
     def _check_event(self):
@@ -56,6 +60,8 @@ class AlienInvasion:
             self.ship.move_top = True
         elif event.key == pygame.K_DOWN:
             self.ship.move_down = True
+        elif event.key == pygame.K_SPACE:
+            self._fire_bullet()
 
     def _check_event_keyup(self, event):
         # 停止移动
@@ -68,11 +74,18 @@ class AlienInvasion:
         elif event.key == pygame.K_DOWN:
             self.ship.move_down = False  
 
+    def _fire_bullet(self):
+        '''创建一颗子弹，放入编组中'''
+        bullet = Bullet(self)
+        self.bullets.add(bullet)
+
     def __update_screen(self):
         '''每次循环都重绘屏幕'''
         self.screen.fill(self.settings.bg_color)
         # 加载飞船
         self.ship.blitme()
+        for bullet in self.bullets.sprites():
+            bullet.draw()
         # 让最近绘制的屏幕可见
         pygame.display.flip()
 
