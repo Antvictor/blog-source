@@ -1,9 +1,11 @@
 import sys
+from time import sleep
 import pygame
 from setting import Settings
 from ship import Ship
 from bullet import Bullet
 from alien import Alien
+from game_stats import GameStats
 import random
 
 class AlienInvasion:
@@ -21,10 +23,17 @@ class AlienInvasion:
         # self.settings.screen_height =  self.screen.get_rect().height
         # 设置标题
         pygame.display.set_caption("Alient Invasion")
+        # 用于存储游戏统计信息的实例
+        self.stats = GameStats(self)
+        # 飞船实例
         self.ship = Ship(self)
+        # 子弹编组
         self.bullets = pygame.sprite.Group()
+        # 外星人编组
         self.aliens = pygame.sprite.Group()
+        # 创建外星人群
         self._create_fleet()
+
 
     def run_game(self):
         '''开始游戏主循环'''
@@ -152,7 +161,21 @@ class AlienInvasion:
     def _update_alien(self):
         self._check_fleet_edges()
         self.aliens.update()
+        if pygame.sprite.spritecollideany(self.ship, self.aliens):
+            self._ship_hit()
 
+
+    def _ship_hit(self):
+        # 将ship left -1
+        self.stats.ships_left -= 1
+        # 将子弹和外星人删除
+        self.bullets.empty()
+        self.aliens.empty()
+        # 创建新的外星人和飞船
+        self._create_fleet()
+        self.ship.center_ship()
+        # 暂停
+        sleep(0.5)
 
 if __name__ == '__main__':
     # 创建游戏实例并运行游戏
