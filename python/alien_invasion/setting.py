@@ -11,3 +11,5 @@ class Settings:
         self.bullet_width = 3
         self.bullet_height = 15
         self.bullets_allowed = 3
+        # 外星人设置
+        self.alien_speed = 1.0

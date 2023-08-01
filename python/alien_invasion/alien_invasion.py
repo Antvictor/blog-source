@@ -31,6 +31,7 @@ class AlienInvasion:
             self._check_event()
             self.ship.update()
             self._update_bullet()
+            self._update_alien()
             self.__update_screen()
             
 
@@ -126,6 +127,9 @@ class AlienInvasion:
 
 
         self.aliens.add(alien)
+
+    def _update_alien(self):
+        self.aliens.update()
 
 if __name__ == '__main__':
     # 创建游戏实例并运行游戏
