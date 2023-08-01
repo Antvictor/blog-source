@@ -92,6 +92,9 @@ class AlienInvasion:
             if bullet.rect.bottom < 0 :
                 self.bullets.remove(bullet)
         # print(len(self.bullets)) 
+        self._check_bullet_alien_collisions()
+
+    def _check_bullet_alien_collisions(self):
         # 检测是否与外星人发生碰撞
         collisions = pygame.sprite.groupcollide(self.bullets, self.aliens, True, True)
         # 如果外星人全灭则生成新的外星人群
