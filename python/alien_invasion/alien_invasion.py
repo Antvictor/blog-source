@@ -92,6 +92,8 @@ class AlienInvasion:
             if bullet.rect.bottom < 0 :
                 self.bullets.remove(bullet)
         # print(len(self.bullets)) 
+        # 检测是否与外星人发生碰撞
+        collisions = pygame.sprite.groupcollide(self.bullets, self.aliens, True, True)
 
     def __update_screen(self):
         '''每次循环都重绘屏幕'''
@@ -125,11 +127,23 @@ class AlienInvasion:
                 alien.rect.y = alien.rect.height + 2 * alien.rect.height * row
                 self.aliens.add(alien)
 
+    def _check_fleet_edges(self):
+        '''判断是否有外星人到达屏幕边缘'''
+        for alien in self.aliens.sprites():
+            if alien._check_edges():
+                self._change_fleet_direction()
+                break
 
-        self.aliens.add(alien)
+    def _change_fleet_direction(self):
+        '''整体向下移动'''
+        for alien in self.aliens.sprites():
+            alien.rect.y += self.settings.fleet_drop_speed
+        self.settings.fleet_direction *= -1
 
     def _update_alien(self):
+        self._check_fleet_edges()
         self.aliens.update()
+
 
 if __name__ == '__main__':
     # 创建游戏实例并运行游戏
