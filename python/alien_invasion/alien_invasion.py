@@ -4,6 +4,7 @@ from setting import Settings
 from ship import Ship
 from bullet import Bullet
 from alien import Alien
+import random
 
 class AlienInvasion:
     def __init__(self):
@@ -125,9 +126,10 @@ class AlienInvasion:
         # 计算一行多少外星人
         available_screen_x = self.settings.screen_width - (2 * alien_width)
         number_aliens_x = available_screen_x // (2* alien_width)
-
-        for row in range(number_aliens):
-            for alien_number in range(number_aliens_x):
+        rows = random.randint(1, number_aliens);
+        for row in range(rows):
+            cloumns = random.randint(0, number_aliens_x)
+            for alien_number in range(cloumns):
                 alien = Alien(self)
                 alien.x = alien_width +  2 * alien_width * alien_number
                 alien.rect.x = alien.x
