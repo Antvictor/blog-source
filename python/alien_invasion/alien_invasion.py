@@ -94,6 +94,10 @@ class AlienInvasion:
         # print(len(self.bullets)) 
         # 检测是否与外星人发生碰撞
         collisions = pygame.sprite.groupcollide(self.bullets, self.aliens, True, True)
+        # 如果外星人全灭则生成新的外星人群
+        if not self.aliens:
+            self.bullets.empty()
+            self._create_fleet()
 
     def __update_screen(self):
         '''每次循环都重绘屏幕'''
