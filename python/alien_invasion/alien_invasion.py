@@ -61,6 +61,9 @@ class AlienInvasion:
             # 监听到键盘弹起
             elif event.type == pygame.KEYUP:
                 self._check_event_keyup(event)
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                mouse_pos = pygame.mouse.get_pos()
+                self.__check_play_button(mouse_pos)
 
             # 监听到退出
             if event.type == pygame.QUIT :
@@ -185,6 +188,21 @@ class AlienInvasion:
                 self._ship_hit()
                 break
 
+    def __check_play_button(self, mouse_pos):
+        '''点击Play则重新开始游戏'''
+        if self.play_button.rect.collidepoint(mouse_pos) and not self.stats.game_activety:
+            # 清楚统计信息
+            self.stats.reset_stats()
+            self.stats.game_activety = True
+
+            # 清空余下的子弹
+            self.aliens.empty()
+            self.bullets.empty()
+
+            # 重新创建外星人和飞船
+            self._create_fleet()
+            self.ship.center_ship()
+
     def _ship_hit(self):
         if self.stats.ships_left > 0 :
             # 将ship left -1
@@ -199,6 +217,8 @@ class AlienInvasion:
             sleep(0.5)
         else:
             self.stats.game_activety = False
+
+
 
 if __name__ == '__main__':
     # 创建游戏实例并运行游戏
