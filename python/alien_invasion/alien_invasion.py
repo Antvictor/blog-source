@@ -119,6 +119,8 @@ class AlienInvasion:
         collisions = pygame.sprite.groupcollide(self.bullets, self.aliens, True, True)
         # 如果外星人全灭则生成新的外星人群
         if not self.aliens:
+            # 被消灭就提高速度
+            self.settings.increase_speed()
             self.bullets.empty()
             self._create_fleet()
 
@@ -191,6 +193,8 @@ class AlienInvasion:
     def __check_play_button(self, mouse_pos):
         '''点击Play则重新开始游戏'''
         if self.play_button.rect.collidepoint(mouse_pos) and not self.stats.game_activety:
+            # 重置速度设置
+            self.settings.initialize_dynamic_settings()
             # 清楚统计信息
             self.stats.reset_stats()
             self.stats.game_activety = True
