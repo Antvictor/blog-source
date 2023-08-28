@@ -7,6 +7,7 @@ from bullet import Bullet
 from alien import Alien
 from game_stats import GameStats
 import random
+from button import Button
 
 class AlienInvasion:
     def __init__(self):
@@ -33,6 +34,10 @@ class AlienInvasion:
         self.aliens = pygame.sprite.Group()
         # 创建外星人群
         self._create_fleet()
+        # 默认不活跃
+        self.stats.game_activety = False;
+        # 按钮
+        self.play_button = Button(self, "Play")
 
 
     def run_game(self):
@@ -122,6 +127,10 @@ class AlienInvasion:
         for bullet in self.bullets.sprites():
             bullet.draw()
         self.aliens.draw(self.screen)
+
+        # 如果未活跃则绘制按钮
+        if not self.stats.game_activety:
+            self.play_button.draw_button()
         # 让最近绘制的屏幕可见
         pygame.display.flip()
 
