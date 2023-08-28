@@ -194,6 +194,8 @@ class AlienInvasion:
             # 清楚统计信息
             self.stats.reset_stats()
             self.stats.game_activety = True
+            # 隐藏光标
+            pygame.mouse.set_visible(False)
 
             # 清空余下的子弹
             self.aliens.empty()
@@ -217,6 +219,7 @@ class AlienInvasion:
             sleep(0.5)
         else:
             self.stats.game_activety = False
+            pygame.mouse.set_visible(True)
 
 
 
