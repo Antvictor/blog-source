@@ -137,9 +137,11 @@ class AlienInvasion:
         # 计算一行多少外星人
         available_screen_x = self.settings.screen_width - (2 * alien_width)
         number_aliens_x = available_screen_x // (2* alien_width)
-        rows = random.randint(1, number_aliens);
+        # rows = random.randint(1, number_aliens);
+        rows = number_aliens;
         for row in range(rows):
-            cloumns = random.randint(0, number_aliens_x)
+            # cloumns = random.randint(0, number_aliens_x)
+            cloumns = number_aliens_x
             for alien_number in range(cloumns):
                 alien = Alien(self)
                 alien.x = alien_width +  2 * alien_width * alien_number
@@ -175,7 +177,7 @@ class AlienInvasion:
                 break
 
     def _ship_hit(self):
-        if self.stats.ships_left >= 0 :
+        if self.stats.ships_left > 0 :
             # 将ship left -1
             self.stats.ships_left -= 1
             # 将子弹和外星人删除
