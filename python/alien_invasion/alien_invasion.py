@@ -39,9 +39,11 @@ class AlienInvasion:
         '''开始游戏主循环'''
         while True:
             self._check_event()
-            self.ship.update()
-            self._update_bullet()
-            self._update_alien()
+            # 停止后补再更新界面信息
+            if self.stats.game_activety:
+                self.ship.update()
+                self._update_bullet()
+                self._update_alien()
             self.__update_screen()
             
 
@@ -173,16 +175,19 @@ class AlienInvasion:
                 break
 
     def _ship_hit(self):
-        # 将ship left -1
-        self.stats.ships_left -= 1
-        # 将子弹和外星人删除
-        self.bullets.empty()
-        self.aliens.empty()
-        # 创建新的外星人和飞船
-        self._create_fleet()
-        self.ship.center_ship()
-        # 暂停
-        sleep(0.5)
+        if self.stats.ships_left >= 0 :
+            # 将ship left -1
+            self.stats.ships_left -= 1
+            # 将子弹和外星人删除
+            self.bullets.empty()
+            self.aliens.empty()
+            # 创建新的外星人和飞船
+            self._create_fleet()
+            self.ship.center_ship()
+            # 暂停
+            sleep(0.5)
+        else:
+            self.stats.game_activety = False
 
 if __name__ == '__main__':
     # 创建游戏实例并运行游戏
