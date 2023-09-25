@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>number game</title>
+	</head>
+	<body>
+		<h1> 数字游戏</h1>
+		<p> 系统会随机生成一个1-100的代码，您有10次猜测的机会，每次猜测都会进行提示，请注意提示哦！ </p>
+		<label class="from">您的猜测：</label>
+		<input type="number" min="1" max="100" class="guessField"/>
+		<input type="submit" class="guessSubmit"/>
+		<div class="resultParas">
+			<p class="guesses"></p>
+			<p class="lastResult"></p>
+			<p class="lowOrHi"></p>
+		</div>
+		
+		
+		<script defer>
+			let randNumber = Math.floor(Math.random() * 100) + 1;
+			
+			const guessField = document.querySelector(".guessField");
+			const guessSubmit = document.querySelector(".guessSubmit");
+			
+			
+			const guesses = document.querySelector(".guesses");
+			const lastResult = document.querySelector(".lastResult");
+			const lowOrHi = document.querySelector(".lowOrHi");
+			
+			let guessCount = 1;
+			let resetButton;
+			
+			function checkGuess() {
+				const userGuess = Number(guessField.value);
+				console.log(randNumber)
+				if (guessCount === 1) {
+					guesses.textContent = "历史记录";
+				}
+				guesses.textContent += ` ${userGuess}`;
+				
+				if (userGuess === randNumber) {
+					lastResult.textContent = "恭喜！您猜对了！";
+					lastResult.style.backgroundColor = "green";
+					lowOrHi.textContent = '';
+					setGameOver();
+				} else if (guessCount === 10) {
+					lastResult.textContent = "Game Over";
+					lastResult.style.backgroundColor = "red";
+					lowOrHi.textContent = '';
+					setGameOver();
+				} else{
+					lastResult.textContent = "阿哦～～ 猜错了，再来一次！";
+					lastResult.style.backgroundColor = "red";
+					if (userGuess > randNumber) {
+						lowOrHi.textContent = "比正确答案大";
+					} else if (userGuess < randNumber) {
+						lowOrHi.textContent = "比正确答案小";
+					}
+				}
+				
+				guessCount++;
+				guessField.value = '';
+				guessField.focus();
+			}
+			
+			// 监听点击事件
+			guessSubmit.addEventListener('click', checkGuess);
+			
+			function setGameOver(){
+				guessField.disabled = true;
+				guessSubmit.disabled = true;
+				resetButton = document.createElement("button");
+				
+				resetButton.textContent = "开始游戏";
+				document.body.append(resetButton);
+				
+				resetButton.addEventListener("click", resetGame);
+			}
+			
+			function resetGame() {
+				guessCount = 1;
+				const resetParas = document.querySelectorAll(".resultParas p");
+				for (const resetPara of resetParas){
+					resetPara.textContent = "";
+				}
+				
+				// document.parentNode.removeChild(resetButton);
+				document.body.removeChild(resetButton);
+				
+				guessField.disabled = false;
+				guessSubmit.disabled = false;
+			
+				guessField.value = '';
+				guessField.focus();
+				
+				randNumber = Math.floor(Math.random() * 100) + 1;
+				
+			}
+			
+		</script>
+	</body>
+</html>
